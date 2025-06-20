@@ -18,6 +18,7 @@ const isAuthenticated=async(req,resizeBy, next)=>{
             });
         }
         req.id=decode.userId;
+        next();
     } catch (error) {
         console.log(error);
         
