@@ -3,6 +3,9 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import connectDB from "./utils/db.js";
+import userRoute from "./routes/user.route.js";
+import v2 from "cloudinary";
+
 
 dotenv.config({});
 
@@ -26,6 +29,9 @@ const corsOptions={
 }
 app.use(cors(corsOptions));
 
+//api
+app.use("/api/v1/user", userRoute);
+//"http://localhost:8000/api/v1/user/register"
 
 
 app.listen(PORT,()=>{
