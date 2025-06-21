@@ -2,6 +2,7 @@ import { User } from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import getDataUri from "../utils/datauri.js";
+import cloudinary from "../utils/cloudinary.js";
 
 export const register = async (req, res) => {
     try {
@@ -119,9 +120,46 @@ export const editProfile=async(req,res)=>{
         let cloudResponse;
         if(profilePicture){
             const fileUri=getDataUri(profilePicture);
-            await 
+            cloudResponse = await cloudinary.uploader.upload(fileUri);
         }
+        const user = await User.findById(userId);
+        if(!user){
+            return res.status(404).json({
+                message: 'User not found!',
+                success: false
+            });
+        }
+        if(bio) user.bio=bio;
+        if(gender) user.gender=gender;
+        if(profilePicture) user.profilePicture=cloudResponse.secure_url;
+
+        await user.save();
+        return res.status(200).json({
+            message:'Profile Updated Successfully!',
+            success: true,
+            user
+
+        });
     } catch (error) {
         console.log(error);
     }
 };
+
+export const getSuggestedUser=async(req,res)=>{
+    try {
+        const suggestedUsers=await User.find({_id:{$ne:req.id}}).select("-password");
+        if(!suggestedUsers){
+            return res.status(400).json({
+                message: "currently do not have any users ",
+            });
+        };
+        return res.status(200).json({
+                success:true,
+                users: suggestedUsers
+            });
+    } catch (error) {
+        console.log(error);
+
+    }
+};
+
