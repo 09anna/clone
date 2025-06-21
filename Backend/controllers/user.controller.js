@@ -72,8 +72,6 @@ export const login=async(req,res)=>{
             posts:user.posts
         }
 
-
-
         const token= await jwt.sign({userId: user._id},process.env.SECRET_KEY,{expiresIn:'1d'} );
         return res.cookie('token', token, {httpOnly: true, sameSite: 'strict', maxAge:1*24*60*60*1000}).json({
             message: `Welcome back ${user.username}`,
@@ -163,3 +161,53 @@ export const getSuggestedUser=async(req,res)=>{
     }
 };
 
+export const followOrUnfollow=async(req, res)=>{
+    try {
+        const followKrneWala =req.id;
+        const jiskoFollowKrunga=req.params.id;
+        if(followKrneWala===jiskoFollowKrunga){
+            return res.status(400).json({
+                messsage: "You cannot follow/unfollow yourself",
+                success: false
+            });
+        }
+        const user =await User.findById(followKrneWala);
+        const targetUser=await User.findById(jiskoFollowKrunga);
+
+        if(!user || !targetUser){
+            return res.status(400).json({
+                messsage: "User Not Found!",
+                success: false
+            });
+        }
+
+        //checking whether to follow or unfollow
+        const isFollowing=user.following.includes(jiskoFollowKrunga);
+        if(isFollowing){
+            //unfollow logic
+             await Promise.all([
+                User.updateOne({_id: followKrneWala},{$pull:{following:jiskoFollowKrunga}}),
+                User.updateOne({_id: jiskoFollowKrunga},{$pull:{followers:followKrneWala}})
+
+            ])
+            return res.status(200).json({
+                message:'Unfollowed successfully.',
+                success: true
+            })            
+
+        }else{
+            //follow logic
+            await Promise.all([
+                User.updateOne({_id: followKrneWala},{$push:{following:jiskoFollowKrunga}}),
+                User.updateOne({_id: jiskoFollowKrunga},{$push:{followers:followKrneWala}})
+
+            ])
+            return res.status(200).json({
+                message:'Followed successfully.',
+                success: true
+            })  
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
