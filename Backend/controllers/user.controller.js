@@ -72,7 +72,7 @@ export const login=async(req,res)=>{
             posts:user.posts
         }
 
-        const token= await jwt.sign({userId: user._id},process.env.SECRET_KEY,{expiresIn:'1d'} );
+        const token=  jwt.sign({userId: user._id},process.env.SECRET_KEY,{expiresIn:'1d'} );
         return res.cookie('token', token, {httpOnly: true, sameSite: 'strict', maxAge:1*24*60*60*1000}).json({
             message: `Welcome back ${user.username}`,
             success: true,
@@ -99,7 +99,7 @@ export const logout=async(_, res)=>{
 export const getProfile=async(req,res)=>{
     try {
         const userId=req.params.id;
-        let user=await User.findById(userId);
+        let user=await User.findById(userId).select('-password');
         return res.status(200).json({
             user,
             success:true
@@ -120,7 +120,7 @@ export const editProfile=async(req,res)=>{
             const fileUri=getDataUri(profilePicture);
             cloudResponse = await cloudinary.uploader.upload(fileUri);
         }
-        const user = await User.findById(userId);
+        const user = await User.findById(userId).select('-password');
         if(!user){
             return res.status(404).json({
                 message: 'User not found!',
