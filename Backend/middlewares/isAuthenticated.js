@@ -9,7 +9,7 @@ const isAuthenticated=async(req,resizeBy, next)=>{
 
             });
         }
-        const decode=await jwt.verify(token, process.env.SECRET_KEY);
+        const decode = jwt.verify(token, process.env.SECRET_KEY);
         if(!decode){
             return res.status(401).json({
                 message: 'Invalid!',
@@ -24,3 +24,4 @@ const isAuthenticated=async(req,resizeBy, next)=>{
         
     }
 }
+export default isAuthenticated;
