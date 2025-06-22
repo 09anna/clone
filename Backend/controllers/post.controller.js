@@ -158,6 +158,43 @@ export const dislikePost = async (req, res) => {
     }
 }
 
+//add comments
+export const addComment=async(req,res)=>{
+    try {
+        const postId= req.params.id;
+        const commentKrneWalaUserKiId= req.id;
+
+        const {text}=req.body;
+        const post =await Post.findById(postId);
+        if(!text){
+            return res.status(400).json({
+                message:'TExt is required',
+                success:false
+            })
+        }
+        const comment =await comment.create({
+            text,
+            author: commentKrneWalaUserKiId,
+            post:postId
+        }).populate({
+            path: 'author',
+            select:'username, profilePicture' 
+        });
+        post.comments.push(comment._id);
+        await post.save();
+
+        return res.status(201).json({
+            message: "Comment Posted.",
+            comment,
+            success:true
+        });
+    } catch (error) {
+        console.log(error);
+    }
+
+};
+
+
 
 
 
