@@ -4,7 +4,7 @@ import { Input } from "./ui/input.jsx";
 import { Button } from "./ui/button.jsx";
 import axios from "axios";
 import { toast } from "sonner";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 
 
@@ -14,6 +14,7 @@ const Login = () => {
         password: ""
     });
     const [loading, setLoading] = useState(false);
+    const navigate=useNavigate();
     const changeEventHandler = (e) => {
         setInput({ ...input, [e.target.name]: e.target.value });
     }
@@ -30,6 +31,8 @@ const Login = () => {
                 withCredentials: true
             });
             if (res.data.success) {
+                navigate("/");
+
                 //navigate("/login");
                 toast.success(res.data.message);
                 setInput({
