@@ -4,6 +4,7 @@ import { Input } from "./ui/input.jsx";
 import { Button } from "./ui/button.jsx";
 import axios from "axios";
 import { toast } from "sonner";
+import { Link } from "react-router-dom";
 
 
 const Signup = () => {
@@ -51,7 +52,7 @@ const Signup = () => {
             <form onSubmit={signupHandler} className='shadow-lg bg-white flex flex-col gap-5 p-8'>
                 <div className="my-4">
                     <h1 className="text-center font-bold text-xl">Logo</h1>
-                    <p className="text-sm text-center">SignUp to see photos and videos.</p>
+                    <p className="text-sm text-center">SignUp</p>
                 </div>
                 <div>
                     <span className="font-medium my-2">Username</span>
@@ -77,7 +78,7 @@ const Signup = () => {
                 <div>
                     <span className="font-medium">Password</span>
                     <Input
-                        type="text"
+                        type="password"
                         name="password"
                         placeholder="Enter password"
                         value={input.password}
@@ -87,6 +88,7 @@ const Signup = () => {
                 </div>
 
                 <Button type='submit'>Signup</Button>
+                <span className="text-center">Already have an account?<Link to='/login' className="text-blue-600">Login</Link> </span>
             </form>
         </div>
     )
