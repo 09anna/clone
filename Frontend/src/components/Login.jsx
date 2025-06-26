@@ -89,7 +89,7 @@ const Login = () => {
                 }
 
 
-                <span className="text-center">Doesn't have an account?<Link to='/signup' className="text-blue-600"></Link> </span>
+                <span className="text-center">Doesn't have an account?<Link to='/signup' className="text-blue-600">SignUp</Link> </span>
             </form>
         </div>
     )
