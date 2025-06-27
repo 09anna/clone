@@ -6,10 +6,29 @@ import React, { useState } from "react";
 
 import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
+import axios from "axios";
 
 
 const CommentDialog = ({ open, setOpen }) => {
-    
+    const [text, setText] = useState("");
+    const changeEventHandler = (e) => {
+        const inputText = e.target.value;
+        if (inputText.trim()) {
+            setText(inputText);
+        } else {
+            setText("");
+        }
+    }
+    const sendMessageHandler = async () => {
+        alert(text);
+        try {
+
+        } catch (error) {
+            console.log(error);
+
+        }
+    }
+
 
 
     return (
@@ -58,12 +77,12 @@ const CommentDialog = ({ open, setOpen }) => {
                         </div>
                         <div className='p-4'>
                             <div className='flex items-center gap-2'>
-                                <input type="text" placeholder="Add a comment..." className='w-full outline-none border text-sm border-gray-300 p-2 rounded'/>
-                                <Button variant="outline">Send</Button>
+                                <input type="text" value={text} onChange={changeEventHandler} placeholder="Add a comment..." className='w-full outline-none border text-sm border-gray-300 p-2 rounded' />
+                                <Button disabled={!text.trim()} onClick={sendMessageHandler} variant="outline">Send</Button>
 
                             </div>
-                            
-                               
+
+
                         </div>
 
                     </div>
@@ -75,5 +94,6 @@ const CommentDialog = ({ open, setOpen }) => {
         </Dialog >
     )
 }
+
 
 export default CommentDialog;
