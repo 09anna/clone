@@ -1,14 +1,25 @@
+import { Dialog, DialogContent } from "@radix-ui/react-dialog";
 import React from "react";
 
 const CreatePost=()=>{
-    return (
-        <div>
-            <LeftSidebar/>
-            <div>
-                <Outlet/>
-            </div>
+    const createPostHandler=async(e)=>{
+        e.preventDefault();
+        try {
+            
+        } catch (error) {
+            console.log(error);
+        }
 
-        </div>
+    }
+    return (
+        <Dialog open={open}>
+            <DialogContent onInteractOutside={()=>setOpen(false)}>
+                <form onSubmit={createPostHandler}>
+
+                </form>
+
+            </DialogContent>
+        </Dialog>
     )
 }
 
