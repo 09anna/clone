@@ -1,10 +1,16 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { Dialog, DialogContent, DialogTrigger } from "@radix-ui/react-dialog";
+
 import { MoreHorizontal } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
+
 import { Link } from "react-router-dom";
+import { Button } from "./ui/button";
+
 
 const CommentDialog = ({ open, setOpen }) => {
+    
+
 
     return (
         <Dialog open={open}>
@@ -42,6 +48,22 @@ const CommentDialog = ({ open, setOpen }) => {
                                     </div>
                                 </DialogContent>
                             </Dialog>
+                        </div>
+                        <hr />
+                        <div className='flex-1 overflow-y-auto max-h-96 p-4'>
+                            comment1
+                            comment2
+                            comment3
+                            comment4
+                        </div>
+                        <div className='p-4'>
+                            <div className='flex items-center gap-2'>
+                                <input type="text" placeholder="Add a comment..." className='w-full outline-none border text-sm border-gray-300 p-2 rounded'/>
+                                <Button variant="outline">Send</Button>
+
+                            </div>
+                            
+                               
                         </div>
 
                     </div>
