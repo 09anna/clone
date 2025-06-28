@@ -3,6 +3,7 @@ import React from "react";
 import { DialogHeader } from "./ui/dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { Textarea } from "@/components/ui/textarea.jsx";
+import { Button } from "./ui/button";
 
 
 const CreatePost=({open, setOpen})=>{
@@ -31,6 +32,8 @@ const CreatePost=({open, setOpen})=>{
                     </div>
                 </div>
                 <Textarea className="focus-visible:ring-transparent border-none" placeholder="Write a caption..."/>
+                <input  type='file' className='hidden'  />
+                <Button className="w-fit mx-auto bg-[#0095F6] hover:bg-[#258bcf] ">Select from Device</Button>
 
                 
                 
