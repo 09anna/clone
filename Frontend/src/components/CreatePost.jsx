@@ -1,12 +1,26 @@
 import { Dialog, DialogContent } from "@radix-ui/react-dialog";
-import React from "react";
+import React, { useRef, useState } from "react";
 import { DialogHeader } from "./ui/dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { Textarea } from "@/components/ui/textarea.jsx";
 import { Button } from "./ui/button";
+import { readFileAsDataURL } from "../lib/utils";
 
 
 const CreatePost=({open, setOpen})=>{
+    const imageRef=useRef();
+    const [file, setFile]=useState("");
+    const [caption, setCaption]=useState("");
+    const[imagePreview, setImagePreview]=useState("");
+
+    const fileChangeHandler = async (e) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setFile(file);
+      const dataUrl = await readFileAsDataURL(file);
+      setImagePreview(dataUrl);
+    }
+  }
     
     const createPostHandler=async(e)=>{
         e.preventDefault();
@@ -32,8 +46,17 @@ const CreatePost=({open, setOpen})=>{
                     </div>
                 </div>
                 <Textarea className="focus-visible:ring-transparent border-none" placeholder="Write a caption..."/>
-                <input  type='file' className='hidden'  />
-                <Button className="w-fit mx-auto bg-[#0095F6] hover:bg-[#258bcf] ">Select from Device</Button>
+                {
+                    imagePreview && (
+                        <div>
+                            <img src={imagePreview} alt="image_preview"/>
+                        </div>
+                    )
+                }
+                <input ref={imageRef} type='file' className='hidden' onChange={fileChangeHandler}  />
+                <Button onClick={() => imageRef.current.click()}  className="w-fit mx-auto bg-[#0095F6] hover:bg-[#258bcf] ">Select from Device</Button>
+
+
 
                 
                 
