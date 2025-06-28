@@ -6,6 +6,7 @@ import {
 } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import authSlice from "./authSlice.js";
+import postSlice from "./postSlice.js";
 
 
 
@@ -16,6 +17,7 @@ const persistConfig = {
 }
 const rootReducer=combineReducers({
     auth:authSlice,
+    post: postSlice
 
 })
 const persistedReducer = persistReducer(persistConfig, rootReducer)
