@@ -48,8 +48,8 @@ const CreatePost=({open, setOpen})=>{
                 <Textarea className="focus-visible:ring-transparent border-none" placeholder="Write a caption..."/>
                 {
                     imagePreview && (
-                        <div>
-                            <img src={imagePreview} alt="image_preview"/>
+                        <div className='w-full h-64 flex items-center justify-center'>
+                            <img src={imagePreview} alt="image_preview" className='object-cover h-full w-full rounded-md'/>
                         </div>
                     )
                 }
