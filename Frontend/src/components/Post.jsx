@@ -1,16 +1,16 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
-import { Dialog } from "./ui/dialog";
+import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar.jsx";
+import { Dialog } from "../components/ui/dialog.jsx";
 import React, { useState } from "react";
-import { DialogContent, DialogTrigger } from "@radix-ui/react-dialog";
+import { DialogContent, DialogTrigger } from"../components/ui/dialog.jsx";
 import { Bookmark, MessageCircle, MoreHorizontal, Send } from "lucide-react";
-import { Button } from "./ui/button";
+import { Button } from "../components/ui/button.jsx";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
-import CommentDialog from "./CommentDialog";
+import CommentDialog from "./CommentDialog.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import axios, { Axios } from "axios";
 import { toast } from "sonner";
 import { setPosts, setSelectedPost } from "../redux/postSlice";
-import { Badge } from "./ui/badge";
+import { Badge } from "../components/ui/badge.jsx";
 
 const Post = ({ post }) => {
     const [text, setText] = useState("");

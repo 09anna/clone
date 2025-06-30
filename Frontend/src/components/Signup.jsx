@@ -1,7 +1,7 @@
 //import { Label, Input } from "@radix-ui/react-label";
 import React, { useState } from "react";
-import { Input } from "./ui/input.jsx";
-import { Button } from "./ui/button.jsx";
+import { Input } from "../components/ui/input.jsx";
+import { Button } from "../components/ui/button.jsx";
 import axios from "axios";
 import { toast } from "sonner";
 import { Link, useNavigate } from "react-router-dom";

@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar.jsx";
 import React from "react";
 const Comment = ({ comment }) => {
     return (

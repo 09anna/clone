@@ -1,16 +1,31 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
-import { Dialog, DialogContent, DialogTrigger } from "@radix-ui/react-dialog";
+import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar.jsx";
+import { Dialog, DialogContent, DialogTrigger } from "../components/ui/dialog.jsx";
 
 import { MoreHorizontal } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import Comment from "./Comment";
+import { toast } from "sonner";
+import { setPosts } from "../redux/postSlice";
 
 
 const CommentDialog = ({ open, setOpen }) => {
+
     const [text, setText] = useState("");
+    const { selectedPost, posts } = useSelector(store => store.post);
+    const [comment, setComment] = useState([]);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (selectedPost) {
+            setComment(selectedPost.comments);
+        }
+    }, [selectedPost]);
+
     const changeEventHandler = (e) => {
         const inputText = e.target.value;
         if (inputText.trim()) {
@@ -19,14 +34,31 @@ const CommentDialog = ({ open, setOpen }) => {
             setText("");
         }
     }
-    const sendMessageHandler = async () => {
-        alert(text);
-        try {
 
+
+    const sendMessageHandler = async () => {
+        try {
+            const res = await axios.post(`http://localhost:8000/api/v1/post/${selectedPost?._id}/comment`, { text }, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }, withCredentials: true
+            });
+
+            if (res.data.success) {
+                const updatedCommentData = [...comment, res.data.comment];
+                setComment(updatedCommentData);
+                const updatedPostData = posts.map(p =>
+                    p._id === selectedPost._id ? { ...p, comments: updatedCommentData } : p
+                );
+                dispatch(setPosts(updatedPostData));
+                toast.success(res.data.message);
+                setText("");
+            }
         } catch (error) {
             console.log(error);
 
         }
+
     }
 
 
@@ -37,7 +69,7 @@ const CommentDialog = ({ open, setOpen }) => {
                 <div className='flex flex-1'>
                     <div className='w-1/2'>
                         <img className={'rounded-sm my-2 w-full aspect-square object-cover'}
-                            src="https://plus.unsplash.com/premium_photo-1750681051145-45991d0693ee?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                            src={selectedPost?.image}
                             alt="picture" />
                     </div>
                     <div className="m-1/2 flex flex-col justify-between">
@@ -45,12 +77,12 @@ const CommentDialog = ({ open, setOpen }) => {
                             <div className='flex gap-3 items-center'>
                                 <Link>
                                     <Avatar>
-                                        <AvatarImage src="" />
+                                        <AvatarImage src={selectedPost?.author?.profilePicture} />
                                         <AvatarFallback>CN</AvatarFallback>
                                     </Avatar>
                                 </Link>
                                 <div>
-                                    <Link className='font-semibold text-xs'>Link</Link>
+                                    <Link className='font-semibold text-xs'>{selectedPost?.author?.username}</Link>
                                     {/*<span className='text-gray-600 text-sm'>Bio here...</span>*/}
                                 </div>
                             </div>
@@ -70,10 +102,10 @@ const CommentDialog = ({ open, setOpen }) => {
                         </div>
                         <hr />
                         <div className='flex-1 overflow-y-auto max-h-96 p-4'>
-                            comment1
-                            comment2
-                            comment3
-                            comment4
+                            {
+                                comment.map((comment) => <Comment key={comment._id} comment={comment} />)
+                            }
+
                         </div>
                         <div className='p-4'>
                             <div className='flex items-center gap-2'>
