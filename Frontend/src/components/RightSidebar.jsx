@@ -2,6 +2,7 @@ import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar.jsx";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import SuggestedUsers from "./SuggestedUsers.jsx";
 
 
 const RightSidebar = () => {
@@ -21,6 +22,8 @@ const RightSidebar = () => {
 
                 </div>
             </div>
+
+            <SuggestedUsers/>
 
         </div>
     )
