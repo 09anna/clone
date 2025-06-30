@@ -1,10 +1,8 @@
-/** @type {import('tailwindcss').Config} */
+// tailwind.config.js
 export default {
   content: [
-    './src/**/*.{js,jsx,ts,tsx}',       // usually your React code is under src
-    './components/**/*.{js,jsx,ts,tsx}', // if your components folder is outside src
-    './pages/**/*.{js,jsx,ts,tsx}',      // if you have a pages folder for routing
-    './app/**/*.{js,jsx,ts,tsx}',        // if you have app folder (Next.js style)
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {},
