@@ -1,8 +1,11 @@
 import React from "react";
+import { Avatar, AvatarImage } from "./ui/avatar";
 const Profile=()=>{
     return (
         <div>
-            Profile
+            <Avatar>
+                <AvatarImage/>
+            </Avatar>
 
         </div>
     )
