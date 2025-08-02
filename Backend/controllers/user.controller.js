@@ -176,16 +176,16 @@ export const getSuggestedUser = async (req, res) => {
 
 export const followOrUnfollow = async (req, res) => {
     try {
-        const followKrneWala = req.id;
-        const jiskoFollowKrunga = req.params.id;
-        if (followKrneWala === jiskoFollowKrunga) {
+        const followers = req.id;
+        const following = req.params.id;
+        if (followers === following) {
             return res.status(400).json({
                 messsage: "You cannot follow/unfollow yourself",
                 success: false
             });
         }
-        const user = await User.findById(followKrneWala);
-        const targetUser = await User.findById(jiskoFollowKrunga);
+        const user = await User.findById(followers);
+        const targetUser = await User.findById(following);
 
         if (!user || !targetUser) {
             return res.status(400).json({
@@ -195,12 +195,12 @@ export const followOrUnfollow = async (req, res) => {
         }
 
         //checking whether to follow or unfollow
-        const isFollowing = user.following.includes(jiskoFollowKrunga);
+        const isFollowing = user.following.includes(following);
         if (isFollowing) {
             //unfollow logic
             await Promise.all([
-                User.updateOne({ _id: followKrneWala }, { $pull: { following: jiskoFollowKrunga } }),
-                User.updateOne({ _id: jiskoFollowKrunga }, { $pull: { followers: followKrneWala } })
+                User.updateOne({ _id: followers }, { $pull: { following: following } }),
+                User.updateOne({ _id: following }, { $pull: { followers: followers } })
 
             ])
             return res.status(200).json({
@@ -211,8 +211,8 @@ export const followOrUnfollow = async (req, res) => {
         } else {
             //follow logic
             await Promise.all([
-                User.updateOne({ _id: followKrneWala }, { $push: { following: jiskoFollowKrunga } }),
-                User.updateOne({ _id: jiskoFollowKrunga }, { $push: { followers: followKrneWala } })
+                User.updateOne({ _id: followers }, { $push: { following: following } }),
+                User.updateOne({ _id: following }, { $push: { followers: followers } })
 
             ])
             return res.status(200).json({
