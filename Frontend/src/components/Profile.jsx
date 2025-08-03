@@ -12,12 +12,12 @@ const Profile = () => {
     useGetUserProfile(userId);
     const [activeTab, setActiveTab] = useState('posts');
 
-    const { userProfile } = useSelector(store => store.auth);
+    const { userProfile, user } = useSelector(store => store.auth);
     console.log(userProfile);
-    const isLoggedInUserProfile = true;
+    const isLoggedInUserProfile = user?._id === userProfile?._id;
     const isFollowing = false;
 
-    //const isLoggedInUserProfile = user?._id === userProfile?._id;
+    
     const handleTabChanger = (tab) => {
         setActiveTab(tab);
     }
