@@ -1,4 +1,5 @@
 
+import EditProfile from './components/EditProfile.jsx'
 import Home from './components/Home.jsx'
 import Login from './components/Login.jsx'
 import MainLayout from './components/MainLayout.jsx'
@@ -17,17 +18,14 @@ const browserRouter = createBrowserRouter([
         element: <Home />
       },
       {
-        path: '/profile',
+        path: '/profile/:id',
         element: <Profile />
       },
-      /*{
+      {
         path: '/account/edit',
         element: <EditProfile />
       },
-      {
-        path: '/chat',
-        element: <ChatPage />
-      },*/
+      
     ]
   },
   {
