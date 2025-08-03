@@ -45,11 +45,9 @@ const LeftSidebar = () => {
             setOpen(true);
         } else if (textType === "Profile") {
             navigate(`/profile/${user?._id}`);
-        } /*else if (textType === "Home") {
+        } else if (textType === "Home") {
             navigate("/");
-        } else if (textType === 'Messages') {
-            navigate("/chat");
-        }*/
+        } 
     }
 
 
@@ -77,7 +75,7 @@ const LeftSidebar = () => {
     return (
         <div className='fixed top-0 z-10 left-0 px-4 border-r border-gray-300 w-[16%] h-screen'>
             <div className='flex flex-col'>
-                <h1 className='my-8 pl-3 font-[cursive] font-bold   text-xl' style={{ color: '#E1306C' }}>Instagram</h1>
+                <h1 className='my-8 pl-3 font-bold text-xl' style={{ color: '#E1306C' }}>Instagram</h1>
                 <div>
                     {
                         sidebarItems.map((item, index) => {
