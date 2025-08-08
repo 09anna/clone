@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { setUserProfile} from "@/redux/authSlice";
+import { setUserProfile} from "../redux/authSlice.js";
 
 const useGetUserProfile = (userId) => {
     const dispatch = useDispatch();
@@ -22,6 +22,6 @@ const useGetUserProfile = (userId) => {
             }
         }
         fetchUserProfile();
-    }, []);
+    }, [userId]);
 }
 export default useGetUserProfile;
